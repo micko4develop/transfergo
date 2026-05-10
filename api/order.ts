@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import nodemailer from "nodemailer";
-import transferPrices from "../src/data/transferPrices.ts";
+import transferPrices from "../src/data/transferPrices.js";
 
 dotenv.config({ path: ".env.local" });
 dotenv.config();
