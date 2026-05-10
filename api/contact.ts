@@ -147,8 +147,11 @@ type VercelResponse = ServerResponse & {
 };
 
 function sendJson(res: VercelResponse, statusCode: number, body: unknown): void {
-  if (typeof res.status === "function" && typeof res.json === "function") {
-    res.status(statusCode).json(body);
+  const status = res.status;
+  const json = res.json;
+
+  if (typeof status === "function" && typeof json === "function") {
+    status.call(res, statusCode).json?.(body);
     return;
   }
 
