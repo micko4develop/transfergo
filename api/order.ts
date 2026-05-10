@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import nodemailer from "nodemailer";
-import transferPrices from "../src/data/transferPrices.json";
+import transferPrices from "../src/data/transferPrices.ts";
 
 dotenv.config({ path: ".env.local" });
 dotenv.config();
@@ -137,7 +137,8 @@ export async function POST(request: Request): Promise<Response> {
     });
 
     return Response.json({ ok: true }, { status: 200 });
-  } catch {
+  } catch (error) {
+    console.error("TransferGo order email failed", error);
     return Response.json({ error: "Greska pri slanju emaila." }, { status: 500 });
   }
 }

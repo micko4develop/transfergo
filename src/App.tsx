@@ -2,7 +2,7 @@ import { type FormEvent, useState } from "react";
 import backgroundImage from "../bannerr.png";
 import logoImage from "../image-logoo.png";
 import heroVehicle from "../imagee.png";
-import transferPrices from "./data/transferPrices.json";
+import transferPrices from "./data/transferPrices.ts";
 
 const contactPhoneNumber = "+38268672825";
 const contactPhoneDigits = contactPhoneNumber.replace(/\D/g, "");

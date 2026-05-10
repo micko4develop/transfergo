@@ -96,7 +96,8 @@ export async function POST(request: Request): Promise<Response> {
     });
 
     return Response.json({ ok: true }, { status: 200 });
-  } catch {
+  } catch (error) {
+    console.error("TransferGo contact email failed", error);
     return Response.json({ error: "Greška pri slanju emaila." }, { status: 500 });
   }
 }
