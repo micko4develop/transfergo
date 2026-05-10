@@ -244,7 +244,7 @@ export default function App() {
         },
         body: JSON.stringify(routeForm),
       });
-      const result = await response.json();
+      const result = await parseJsonResponse(response);
 
       if (!response.ok) {
         throw new Error(result.error || "Order could not be sent.");
@@ -557,4 +557,20 @@ export default function App() {
       </footer>
     </div>
   );
+}
+
+async function parseJsonResponse(response: Response): Promise<{ error?: string; ok?: boolean }> {
+  const text = await response.text();
+
+  if (!text) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(text) as { error?: string; ok?: boolean };
+  } catch {
+    return {
+      error: response.ok ? undefined : "Server trenutno ne moze da obradi zahtjev.",
+    };
+  }
 }

@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import nodemailer from "nodemailer";
 
 dotenv.config({ path: ".env.local" });
@@ -100,6 +101,31 @@ export async function POST(request: Request): Promise<Response> {
   }
 }
 
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Method not allowed." });
+    return;
+  }
+
+  try {
+    const body = await readRequestBody(req);
+    const response = await POST(
+      new Request("https://transfergo.me/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": req.headers["content-type"] || "application/json",
+        },
+        body,
+      })
+    );
+
+    sendJsonText(res, response.status, await response.text());
+  } catch (error) {
+    console.error("TransferGo contact handler failed", error);
+    sendJson(res, 500, { error: "Greska pri obradi zahtjeva." });
+  }
+}
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -107,4 +133,54 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+type VercelRequest = IncomingMessage & {
+  body?: unknown;
+  method?: string;
+  headers: IncomingMessage["headers"];
+};
+
+type VercelResponse = ServerResponse & {
+  status?: (statusCode: number) => VercelResponse;
+  json?: (body: unknown) => void;
+};
+
+function sendJson(res: VercelResponse, statusCode: number, body: unknown): void {
+  if (typeof res.status === "function" && typeof res.json === "function") {
+    res.status(statusCode).json(body);
+    return;
+  }
+
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(body));
+}
+
+function sendJsonText(res: VercelResponse, statusCode: number, body: string): void {
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "application/json");
+  res.end(body);
+}
+
+async function readRequestBody(req: VercelRequest): Promise<string> {
+  if (typeof req.body === "string") {
+    return req.body;
+  }
+
+  if (Buffer.isBuffer(req.body)) {
+    return req.body.toString("utf8");
+  }
+
+  if (req.body && typeof req.body === "object") {
+    return JSON.stringify(req.body);
+  }
+
+  const chunks: Buffer[] = [];
+
+  for await (const chunk of req) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+
+  return Buffer.concat(chunks).toString("utf8");
 }
