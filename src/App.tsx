@@ -108,7 +108,7 @@ const translations = {
       sent: "Vaš zahtjev za vožnju je poslat. Kontaktiraćemo vas uskoro.",
       sendError: "Narudžbina nije mogla biti poslata.",
       sending: "Šalje se...",
-      orderRide: "Naruči vožnju",
+      orderRide: "Order Ride",
     },
     trust: [
       ["Besplatno čekanje", "Do 60 minuta"],
