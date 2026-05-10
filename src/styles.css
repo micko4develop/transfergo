@@ -179,7 +179,7 @@ textarea {
 .hero {
   position: relative;
   margin-top: 60px;
-  padding: 48px 0 38px;
+  padding: 34px 0 24px;
   color: #ffffff;
   background-position: center;
   background-size: cover;
@@ -198,7 +198,7 @@ textarea {
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-  gap: clamp(28px, 4vw, 52px);
+  gap: clamp(24px, 3.2vw, 42px);
   align-items: center;
 }
 
@@ -207,7 +207,7 @@ textarea {
 }
 
 .eyebrow {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: #7ff4df;
   font-size: 0.68rem;
   font-weight: 900;
@@ -223,62 +223,97 @@ textarea {
 .hero h1 {
   max-width: 17ch;
   margin: 0;
-  font-size: clamp(2.05rem, 3.7vw, 3.65rem);
+  font-size: clamp(2.05rem, 3.25vw, 3.2rem);
   line-height: 1.02;
   text-wrap: balance;
 }
 
 .hero-lead {
   max-width: 44rem;
-  margin: 14px 0 0;
+  margin: 10px 0 0;
   color: rgba(255, 255, 255, 0.88);
   font-size: 0.98rem;
   line-height: 1.62;
 }
 
 .hero-badges {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
-  margin-top: 16px;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 14px;
 }
 
 .hero-badges span {
-  padding: 10px 15px;
+  padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(23, 37, 62, 0.72);
   color: #ffffff;
   font-size: 0.92rem;
   font-weight: 800;
+  text-align: center;
 }
 
 .hero-search-form {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
   align-items: end;
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 16px;
+  padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 22px;
-  background: rgba(9, 20, 43, 0.58);
+  border-radius: 8px;
+  background: rgba(23, 37, 62, 0.72);
   box-shadow: 0 28px 70px rgba(4, 9, 27, 0.34);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(16px);
 }
 
 .hero-search-form label {
   min-width: 0;
 }
 
+.hero-search-form > label:nth-of-type(1),
+.hero-search-form > label:nth-of-type(2) {
+  grid-column: span 1;
+}
+
+.hero-search-form > label:nth-of-type(3),
+.hero-search-form > label:nth-of-type(4),
+.hero-search-form > label:nth-of-type(5) {
+  grid-column: span 1;
+}
+
+@media (min-width: 1040px) {
+  .hero-search-form {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .hero-search-form > label:nth-of-type(1),
+  .hero-search-form > label:nth-of-type(2) {
+    grid-column: span 3;
+  }
+
+  .hero-search-form > label:nth-of-type(3),
+  .hero-search-form > label:nth-of-type(4),
+  .hero-search-form > label:nth-of-type(5) {
+    grid-column: span 2;
+  }
+
+  .booking-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .hero-search-form input,
 .hero-search-form select {
   width: 100%;
-  min-height: 56px;
+  min-height: 50px;
   padding: 14px 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   outline: none;
   transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
@@ -318,28 +353,10 @@ textarea {
   color-scheme: dark;
 }
 
-.hero-search-form input[type="date"],
-.hero-search-form input[type="time"] {
-  appearance: none;
-  padding-right: 40px;
-  background-image:
-    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.82) 50%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.82) 50%, transparent 50%);
-  background-position:
-    calc(100% - 20px) 50%,
-    calc(100% - 14px) 50%;
-  background-repeat: no-repeat;
-  background-size: 6px 6px, 6px 6px;
-}
-
-.hero-search-form input[type="date"]::-webkit-calendar-picker-indicator,
-.hero-search-form input[type="time"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-}
 
 .search-button {
   grid-column: 1 / -1;
-  min-height: 56px;
+  min-height: 50px;
 }
 
 .search-button:disabled {
@@ -353,11 +370,11 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  min-height: 62px;
-  padding: 14px 16px;
+  min-height: 52px;
+  padding: 11px 16px;
   border: 1px solid rgba(126, 244, 223, 0.34);
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(24, 201, 185, 0.22), rgba(11, 92, 255, 0.18));
+  border-radius: 8px;
+  background: rgba(11, 50, 83, 0.72);
   color: rgba(255, 255, 255, 0.86);
 }
 
@@ -402,7 +419,7 @@ textarea {
 }
 
 .hero-media {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.12);
@@ -412,6 +429,7 @@ textarea {
 .hero-media img {
   display: block;
   width: 100%;
+  max-height: 320px;
   height: auto;
   border-radius: 18px;
 }
@@ -420,7 +438,7 @@ textarea {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .messenger-link {
@@ -474,15 +492,15 @@ textarea {
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
   width: min(1200px, 100%);
-  margin: 34px auto 0;
+  margin: 22px auto 0;
   padding: 0 var(--page-pad);
 }
 
 .hero-trust div {
   min-width: 0;
-  padding: 18px;
+  padding: 14px 16px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
@@ -491,7 +509,7 @@ textarea {
 
 .hero-trust strong {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   font-size: 1rem;
 }
 
@@ -790,11 +808,15 @@ textarea {
   }
 
   .hero-badges span {
-    min-height: 42px;
-    padding: 8px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 5px;
     text-align: center;
     font-size: 0.68rem;
     line-height: 1.18;
+    white-space: normal;
   }
 
   .hero-search-form {

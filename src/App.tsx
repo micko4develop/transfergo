@@ -369,18 +369,40 @@ export default function App() {
               <label>
                 <span className="sr-only">{t.form.date}</span>
                 <input
-                  type="date"
+                  type="text"
+                  inputMode="none"
                   value={routeForm.date}
+                  placeholder={t.form.date}
                   required
+                  onFocus={(event) => {
+                    event.currentTarget.type = "date";
+                    event.currentTarget.showPicker?.();
+                  }}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.value) {
+                      event.currentTarget.type = "text";
+                    }
+                  }}
                   onChange={(event) => updateRouteForm("date", event.target.value)}
                 />
               </label>
               <label>
                 <span className="sr-only">{t.form.time}</span>
                 <input
-                  type="time"
+                  type="text"
+                  inputMode="none"
                   value={routeForm.time}
+                  placeholder={t.form.time}
                   required
+                  onFocus={(event) => {
+                    event.currentTarget.type = "time";
+                    event.currentTarget.showPicker?.();
+                  }}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.value) {
+                      event.currentTarget.type = "text";
+                    }
+                  }}
                   onChange={(event) => updateRouteForm("time", event.target.value)}
                 />
               </label>
